@@ -7,7 +7,7 @@ const {router}=require("./routes/user.route")
 app.use(cors())
 app.use(express.json())
 app.use("/",router)
-app.listen(process.env.PORT, async (req, res) => {
+app.listen(process.env.port, async (req, res) => {
     try {
         await connection
         console.log("connected to db");

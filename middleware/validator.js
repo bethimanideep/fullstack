@@ -1,6 +1,6 @@
 const { model } = require("../db")
 const bcrypt=require("bcrypt")
-const { appendFileSync }=require('fs')
+const { appendFileSync, writeFileSync }=require('fs')
 const path=require('path')
 const validatoor=async(req,res,next)=>{
     let username = req.body.username
@@ -48,7 +48,7 @@ const record=async(req,res,next)=>{
     let n=req.body.username
     let data=await model.findOne({username:n})
     const rec=`Username:-${data.username} Role:- ${data.role}.\n`
-    appendFileSync("./log.txt",rec,"utf-8")
+    writeFileSync("./log.txt",rec,"utf-8")
     next()
 }
 module.exports={

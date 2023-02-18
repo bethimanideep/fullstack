@@ -43,14 +43,15 @@ const update=async(req,res,next)=>{
     }else{
         res.json("error")
     }
-}
+}  
 const record=async(req,res,next)=>{
     let n=req.body.username
     let data=await model.findOne({username:n})
     const rec=`Username:-${data.username} Role:- ${data.role}.\n`
-    appendFileSync("./log.txt",rec,{flag:"rs+"},"utf-8")
+    writeFileSync("./log.txt",rec,"utf-8")
     next()
 }
+
 module.exports={
     validatoor,
     update,

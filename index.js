@@ -4,14 +4,7 @@ const app = express()
 const cors = require("cors");
 require("dotenv").config()
 const { router } = require("./routes/user.route")
-app.use(express.urlencoded({ extended: true }));
-const corsOptions = {
-    origin: 'https://lucky-parfait-82d7c2.netlify.app/',
-    optionsSuccessStatus: 200
-};
-
-app.options('*', cors(corsOptions));
-app.use(cors(corsOptions));
+app.use(cors())
 
 app.use(express.json())
 app.use("/", router)

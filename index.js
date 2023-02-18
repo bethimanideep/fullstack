@@ -6,7 +6,7 @@ require("dotenv").config()
 const {router}=require("./routes/user.route")
 app.use(
   cors({
-    orgin: "*",
+    orgin: "https://lucky-parfait-82d7c2.netlify.app",
   }),
 );
 app.use(express.json())

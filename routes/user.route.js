@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
         res.json("success")
     }
 })
-router.post("/login", verify, async (req, res) => {
+router.post("/login", verify,record, async (req, res) => {
     res.json("matched")
 })
 router.post("/usercheck", async (req, res) => {

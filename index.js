@@ -6,7 +6,7 @@ require("dotenv").config()
 const {router}=require("./routes/user.route")
 app.use(
   cors({
-    orgin: ["http://127.0.0.1:5500"],
+    orgin: ["*"],
   }),
 );
 app.use(express.json())

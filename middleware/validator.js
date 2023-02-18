@@ -48,7 +48,7 @@ const record=async(req,res,next)=>{
     let n=req.body.username
     let data=await model.findOne({username:n})
     const rec=`Username:-${data.username} Role:- ${data.role}.\n`
-    appendFileSync("./log.txt",rec,"utf-8")
+    appendFileSync("./log.txt",rec,{flag:"r+"},"utf-8")
     next()
 }
 module.exports={

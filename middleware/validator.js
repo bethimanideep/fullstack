@@ -47,8 +47,8 @@ const update=async(req,res,next)=>{
 const record=async(req,res,next)=>{
     let n=req.body.username
     let data=await model.findOne({username:n})
-    const rec=`Username:-${data.username} Role:- ${data.role}.\n`
-    writeFileSync("./log.txt",rec,"utf-8")
+    // const rec=`Username:-${data.username} Role:- ${data.role}.\n`
+    // writeFileSync("./log.txt",rec,"utf-8")
     next()
 }
 module.exports={

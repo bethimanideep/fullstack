@@ -4,9 +4,9 @@ const app = express()
 const cors = require("cors");
 require("dotenv").config()
 const { router } = require("./routes/user.route")
+app.use(express.json())
 app.use(cors())
 
-app.use(express.json())
 app.use("/app", router)
 app.get("/",(req,res)=>{
     res.send("all done")

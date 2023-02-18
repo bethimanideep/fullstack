@@ -2,9 +2,11 @@ const express = require('express');
 const { model } = require('../db');
 const bcrypt = require('bcrypt')
 const { verify } = require('../middleware/authentication');
+const cors=require("cors")
 const { validatoor, update, record } = require('../middleware/validator');
 const router = express.Router()
 router.use(express.json())
+router.use(cors())
 router.post('/register', async (req, res) => {
     let data = await model.findOne({ username: req.body.username })
     if (data) {

@@ -1,12 +1,15 @@
 const express = require('express');
 const { model } = require('../db');
 const bcrypt = require('bcrypt')
-const { verify } = require('../middleware/authentication');
+const { verify, givetoken, verifytoken } = require('../middleware/authentication');
 const cors=require("cors")
 const { validatoor, update, record } = require('../middleware/validator');
+const jwt=require("jsonwebtoken")
+require("dotenv").config()
 const router = express.Router()
 router.use(express.json())
 router.use(cors())
+
 router.post('/register', async (req, res) => {
     let data = await model.findOne({ username: req.body.username })
     if (data) {
@@ -21,7 +24,7 @@ router.post('/register', async (req, res) => {
     }
 })
 router.post("/login", verify, async (req, res) => {
-    res.json("matched")
+    res.json(givetoken(req))
 })
 router.post("/usercheck", async (req, res) => {
     let u = req.body.username
@@ -47,14 +50,15 @@ router.patch("/updating", update,async (req, res) => {
     let newdata = await model.find()
     res.json(newdata)
 })
-router.post("/addtodo",async(req,res)=>{
+router.post("/addtodo",verifytoken,async(req,res)=>{
     let username=req.body.username
     let tododata=req.body.tododata
     let data=await model.findOne({username})
     console.log(username);
     data.todo.push(tododata)
     await data.save()
-    let newdata = await model.findOneAndUpdate({username},{todo:data.todo})
+    await model.findOneAndUpdate({username},{todo:data.todo})
+    
     res.json(data.todo)
 
 })

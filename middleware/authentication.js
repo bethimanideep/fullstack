@@ -9,9 +9,6 @@ const verify=async(req,res,next)=>{
     if (data) {
         let h = bcrypt.compareSync(password, data.password)
         if (h) {
-            let token=jwt.sign({username},process.env.secretkey,{expiresIn:"1h"})
-            console.log(token);
-            localStorage.setItem("token",token)
             next()
         } else {
             res.json("notmatched")
@@ -21,9 +18,26 @@ const verify=async(req,res,next)=>{
     }
 }
 
-const verifytoken=async(req,res,next)=>{
-    jwt.verify()
+const verifytoken=(req,res,next)=>{
+    let token=req.body.token
+    if(token){
+        jwt.verify(token,process.env.secretkey,(err,decoded)=>{
+            if(decoded){
+                next()
+            }else{
+                res.json("tokenexpired")
+            }
+        })
+        
+    }
 }
+function givetoken(req){
+    let token=jwt.sign({username:req.body.username},process.env.secretkey,{expiresIn:"1h"})
+    return token
+}
+
 module.exports={
-    verify
+    givetoken,
+    verify,
+    verifytoken
 }
